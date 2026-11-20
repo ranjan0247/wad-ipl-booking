@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Tickets | IPL 2026</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Navigation Bar (Linked back to index.html) -->
+    <header>
+        <nav class="navbar">
+            <a href="index.html" class="logo">🏏 IPL 2026</a>
+            <ul class="nav-links">
+                <li><a href="index.html#matches">Matches</a></li>
+                <li><a href="booking.html" class="active">Book Ticket</a></li>
+                <li><a href="index.html#my-bookings">My Bookings</a></li>
+                <li><a href="index.html#guidelines">Guidelines</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Compact Banner -->
+        <section class="hero hero-compact">
+            <div class="hero-content">
+                <h1>IPL 2026 Ticket Booking Form</h1>
+                <p>Fill in your match and personal details below to reserve your stadium seats.</p>
+            </div>
+        </section>
+
+        <!-- Booking Form Section -->
+        <section class="container section">
+            <div class="booking-page-wrapper">
+                <form id="ticket-booking-form" class="booking-form" action="#" method="get">
+
+                    <!-- Personal Details -->
+                    <h3 class="form-section-title">1. Personal Details</h3>
+
+                    <div class="form-group">
+                        <label for="customer-name">Full Name *</label>
+                        <input
+                            type="text"
+                            id="customer-name"
+                            name="customerName"
+                            placeholder="Enter your full name"
+                            minlength="3"
+                            maxlength="50"
+                            required
+                        >
+                        <small class="form-hint">Must be between 3 and 50 characters.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customer-email">Email Address *</label>
+                        <input
+                            type="email"
+                            id="customer-email"
+                            name="customerEmail"
+                            placeholder="example@email.com"
+                            maxlength="80"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customer-phone">Phone Number *</label>
+                        <input
+                            type="tel"
+                            id="customer-phone"
+                            name="customerPhone"
+                            placeholder="10-digit mobile number"
+                            minlength="10"
+                            maxlength="10"
+                            pattern="[0-9]{10}"
+                            title="Please enter a valid 10-digit mobile number (digits only)."
+                            required
+                        >
+                        <small class="form-hint">Enter exactly 10 digits without spaces or dashes.</small>
+                    </div>
+
+                    <!-- Match & Seat Selection -->
+                    <h3 class="form-section-title">2. Match &amp; Seat Selection</h3>
+
+                    <div class="form-group">
+                        <label for="match-selection">Select Match *</label>
+                        <select id="match-selection" name="matchSelection" required>
+                            <option value="">-- Choose an IPL 2026 Match --</option>
+                            <option value="M01">M01: Mumbai Indians vs Chennai Super Kings (26 Mar, Mumbai)</option>
+                            <option value="M02">M02: RCB vs Kolkata Knight Riders (27 Mar, Bengaluru)</option>
+                            <option value="M03">M03: Mumbai Indians vs RCB (30 Mar, Mumbai)</option>
+                            <option value="M04">M04: Gujarat Titans vs Delhi Capitals (01 Apr, Ahmedabad)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="stand-category">Stand Category *</label>
+                        <select id="stand-category" name="standCategory" required>
+                            <option value="">-- Choose Stand Category --</option>
+                            <option value="General">General Stand (₹800)</option>
+                            <option value="Premium">Premium Stand (₹2,500)</option>
+                            <option value="VIP">VIP Hospitality Box (₹6,000)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ticket-count">Number of Tickets *</label>
+                        <input
+                            type="number"
+                            id="ticket-count"
+                            name="ticketCount"
+                            min="1"
+                            max="10"
+                            value="1"
+                            required
+                        >
+                        <small class="form-hint">Minimum 1, maximum 10 tickets per booking.</small>
+                    </div>
+
+                    <!-- Booking Preferences -->
+                    <h3 class="form-section-title">3. Booking Preferences</h3>
+
+                    <div class="form-group">
+                        <label>Ticket Delivery Method *</label>
+                        <div class="option-group">
+                            <label class="option-item">
+                                <input type="radio" name="deliveryMethod" value="e-ticket" required checked>
+                                E-Ticket (Sent via Email &amp; SMS)
+                            </label>
+                            <label class="option-item">
+                                <input type="radio" name="deliveryMethod" value="box-office" required>
+                                Physical Ticket (Collect at Stadium Box Office)
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Optional Add-Ons</label>
+                        <div class="option-group">
+                            <label class="option-item">
+                                <input type="checkbox" name="addons" value="parking">
+                                Stadium Parking Pass (+₹300)
+                            </label>
+                            <label class="option-item">
+                                <input type="checkbox" name="addons" value="meal">
+                                Match-Day Snack &amp; Beverage Combo (+₹500)
+                            </label>
+                            <label class="option-item">
+                                <input type="checkbox" name="addons" value="jersey">
+                                Official Team Fan Jersey (+₹1,200)
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="option-item">
+                            <input type="checkbox" id="terms" name="terms" required>
+                            I agree to the Stadium Entry Guidelines and Ticket Terms &amp; Conditions. *
+                        </label>
+                    </div>
+
+                    <!-- Submit & Reset Buttons -->
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Submit Booking</button>
+                        <button type="reset" class="btn btn-reset">Reset Form</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 IPL Ticket Booking Portal. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>
