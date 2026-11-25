@@ -27,35 +27,100 @@ function showToast(message, type = "info") {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    // Ticket prices matching index.html schedule
     const matchPrices = {
         M01: { label: "M01: Mumbai Indians vs Chennai Super Kings", General: 800, Premium: 2500, VIP: 6000 },
         M02: { label: "M02: RCB vs Kolkata Knight Riders", General: 750, Premium: 2200, VIP: 5500 },
-        M03: { label: "M03: Mumbai Indians vs RCB", General: 900, Premium: 2800, VIP: 6500 }
+        M03: { label: "M03: Mumbai Indians vs RCB", General: 900, Premium: 2800, VIP: 6500 },
+        M04: { label: "M04: Gujarat Titans vs Delhi Capitals", General: 700, Premium: 2000, VIP: 5000 }
     };
 
     // =========================================
-    // 2. DOM Selectors (getElementById & querySelector - Activity 7)
+    // 2. Mobile Hamburger Menu Toggle (Activity 8)
+    // =========================================
+    const hamburgerBtn = document.getElementById("hamburger-btn");
+    const navLinks = document.getElementById("nav-links");
+
+    if (hamburgerBtn && navLinks) {
+        hamburgerBtn.addEventListener("click", () => {
+            const isOpen = navLinks.classList.toggle("open");
+            hamburgerBtn.setAttribute("aria-expanded", String(isOpen));
+            hamburgerBtn.innerHTML = isOpen ? "&times;" : "&#9776;";
+        });
+
+        // Close mobile menu when a link is clicked
+        navLinks.querySelectorAll("a").forEach((link) => {
+            link.addEventListener("click", () => {
+                navLinks.classList.remove("open");
+                hamburgerBtn.setAttribute("aria-expanded", "false");
+                hamburgerBtn.innerHTML = "&#9776;";
+            });
+        });
+    }
+
+    // =========================================
+    // 3. Grid / List View Toggle for Match Cards (Activity 8)
+    // =========================================
+    const matchGrid = document.getElementById("match-grid");
+    const gridViewBtn = document.getElementById("grid-view-btn");
+    const listViewBtn = document.getElementById("list-view-btn");
+
+    if (matchGrid && gridViewBtn && listViewBtn) {
+        gridViewBtn.addEventListener("click", () => {
+            matchGrid.classList.remove("list-view");
+            gridViewBtn.classList.add("active");
+            listViewBtn.classList.remove("active");
+            showToast("Switched match schedule to Grid View.", "info");
+        });
+
+        listViewBtn.addEventListener("click", () => {
+            matchGrid.classList.add("list-view");
+            listViewBtn.classList.add("active");
+            gridViewBtn.classList.remove("active");
+            showToast("Switched match schedule to List View.", "info");
+        });
+    }
+
+    // =========================================
+    // 4. Filter Match Cards by Team (Activity 8)
+    // =========================================
+    const teamFilter = document.querySelector("#team-filter");
+
+    if (teamFilter) {
+        teamFilter.addEventListener("change", () => {
+            const selectedTeam = teamFilter.value;
+            const matchCards = document.querySelectorAll(".match-card");
+
+            matchCards.forEach((card) => {
+                const teams = card.getAttribute("data-team") || "";
+                card.style.display =
+                    selectedTeam === "all" || teams.includes(selectedTeam) ? "" : "none";
+            });
+
+            showToast(
+                selectedTeam === "all"
+                    ? "Showing all IPL 2026 matches."
+                    : `Filtered matches for ${selectedTeam}.`,
+                "info"
+            );
+        });
+    }
+
+    // =========================================
+    // 5. DOM Selectors & Live Booking Summary (Activity 7)
     // =========================================
     const bookingSection = document.getElementById("booking");
     const bookingForm = document.getElementById("booking-form");
     const matchSelect = document.getElementById("match-select");
     const standSelect = document.querySelector("#stand-select");
     const ticketQty = document.querySelector("#ticket-qty");
-
     const bookingsTbody = document.getElementById("bookings-tbody");
-    const teamFilter = document.querySelector("#team-filter");
 
-    // Booking Summary Card elements
     const sumMatch = document.querySelector("#sum-match");
     const sumStand = document.querySelector("#sum-stand");
     const sumPrice = document.querySelector("#sum-price");
     const sumQty = document.querySelector("#sum-qty");
     const sumTotal = document.querySelector("#sum-total");
 
-    // =========================================
-    // 3. Live Booking Summary Calculation (Activity 7)
-    // =========================================
     function updateSummary(notify = false) {
         if (!matchSelect || !standSelect || !ticketQty) return;
 
@@ -63,7 +128,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const stand = standSelect.value;
         let qty = parseInt(ticketQty.value, 10);
 
-        // Guard against invalid or empty quantity
         if (isNaN(qty) || qty < 1) {
             qty = 1;
         } else if (qty > 10) {
@@ -75,14 +139,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const unitPrice = selectedMatch && stand ? selectedMatch[stand] : 0;
         const totalAmount = unitPrice * qty;
 
-        // Update Booking Summary Card DOM
         sumMatch.textContent = selectedMatch ? selectedMatch.label : "-";
         sumStand.textContent = stand || "-";
         sumPrice.textContent = unitPrice.toLocaleString("en-IN");
         sumQty.textContent = qty;
         sumTotal.textContent = totalAmount.toLocaleString("en-IN");
 
-        // Confirm summary update via showToast()
         if (notify) {
             if (selectedMatch && stand) {
                 showToast(
@@ -95,7 +157,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Attach 'change' event listeners to Match, Stand, and Quantity controls
     if (matchSelect && standSelect && ticketQty) {
         matchSelect.addEventListener("change", () => updateSummary(true));
         standSelect.addEventListener("change", () => updateSummary(true));
@@ -103,17 +164,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // =========================================
-    // 4. Smooth Scrolling from Match Schedule "Book" Buttons (Activity 5)
+    // 6. Smooth Scrolling from Match Card "Book Ticket" Buttons (Activity 5)
     // =========================================
-    const bookButtons = document.querySelectorAll(".schedule-table .btn-sm");
+    const bookButtons = document.querySelectorAll(".book-match-btn");
 
     bookButtons.forEach((btn) => {
         btn.addEventListener("click", (event) => {
             event.preventDefault();
 
-            const row = btn.closest("tr");
-            const matchCode = row ? row.cells[0].textContent.trim() : "";
-            const matchName = row ? row.cells[1].textContent.trim() : "selected match";
+            const matchCode = btn.getAttribute("data-match") || "";
+            const matchName = btn.getAttribute("data-match-name") || "selected match";
 
             if (matchSelect && matchCode) {
                 matchSelect.value = matchCode;
@@ -129,30 +189,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // =========================================
-    // 5. Team Filter for Match Schedule
-    // =========================================
-    if (teamFilter) {
-        teamFilter.addEventListener("change", () => {
-            const selectedTeam = teamFilter.value;
-            const rows = document.querySelectorAll(".schedule-table tbody tr[data-team]");
-
-            rows.forEach((row) => {
-                const teams = row.getAttribute("data-team") || "";
-                row.style.display =
-                    selectedTeam === "all" || teams.includes(selectedTeam) ? "" : "none";
-            });
-
-            showToast(
-                selectedTeam === "all"
-                    ? "Showing all IPL 2026 matches."
-                    : `Filtered matches for ${selectedTeam}.`,
-                "info"
-            );
-        });
-    }
-
-    // =========================================
-    // 6. Confirm Booking & Add Row to "My Ticket Bookings"
+    // 7. Confirm Booking & Add Row to "My Ticket Bookings"
     // =========================================
     let bookingCounter = 101;
     let hasBookings = false;
@@ -192,7 +229,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // =========================================
-    // 7. Dedicated booking.html Form Toast Support (Activity 3)
+    // 8. Dedicated booking.html Form Support (Activity 3)
     // =========================================
     const standaloneForm = document.getElementById("ticket-booking-form");
     if (standaloneForm) {

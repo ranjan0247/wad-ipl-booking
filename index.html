@@ -8,11 +8,22 @@
 </head>
 <body>
 
-    <!-- Navigation Bar -->
+    <!-- Navigation Bar (Flexbox + Mobile Hamburger) -->
     <header>
         <nav class="navbar">
             <a href="index.html" class="logo">🏏 IPL 2026</a>
-            <ul class="nav-links">
+
+            <button
+                type="button"
+                class="hamburger"
+                id="hamburger-btn"
+                aria-label="Toggle navigation menu"
+                aria-expanded="false"
+            >
+                &#9776;
+            </button>
+
+            <ul class="nav-links" id="nav-links">
                 <li><a href="#matches">Matches</a></li>
                 <li><a href="booking.html">Book Ticket</a></li>
                 <li><a href="#my-bookings">My Bookings</a></li>
@@ -38,7 +49,7 @@
         <section id="about" class="container section">
             <h2>About IPL 2026</h2>
             <p class="section-subtitle">The Indian Premier League (IPL) 2026 brings electrifying T20 cricket back to stadiums across the nation. Get ready for unmatched entertainment, spectacular sixes, and unforgettable rivalries.</p>
-            
+
             <div class="about-grid">
                 <div class="about-card">
                     <h3>Popular Teams</h3>
@@ -64,69 +75,129 @@
             </div>
         </section>
 
-        <!-- Match Schedule Section -->
+        <!-- Match Schedule Section (CSS Grid Cards + Filter + Grid/List Toggle) -->
         <section id="matches" class="container section">
             <h2>Match Schedule &amp; Ticket Prices</h2>
-            
-            <!-- Team Filter -->
-            <div class="filter-container">
-                <label for="team-filter">Filter by Team:</label>
-                <select id="team-filter">
-                    <option value="all">All Teams</option>
-                    <option value="MI">Mumbai Indians</option>
-                    <option value="CSK">Chennai Super Kings</option>
-                    <option value="RCB">Royal Challengers Bengaluru</option>
-                    <option value="KKR">Kolkata Knight Riders</option>
-                </select>
+            <p class="section-subtitle">Filter matches by team or switch between Grid and List layouts.</p>
+
+            <!-- Controls Bar (Flexbox) -->
+            <div class="schedule-controls">
+                <div class="filter-container">
+                    <label for="team-filter">Filter by Team:</label>
+                    <select id="team-filter">
+                        <option value="all">All Teams</option>
+                        <option value="MI">Mumbai Indians (MI)</option>
+                        <option value="CSK">Chennai Super Kings (CSK)</option>
+                        <option value="RCB">Royal Challengers Bengaluru (RCB)</option>
+                        <option value="KKR">Kolkata Knight Riders (KKR)</option>
+                        <option value="GT">Gujarat Titans (GT)</option>
+                        <option value="DC">Delhi Capitals (DC)</option>
+                    </select>
+                </div>
+
+                <div class="view-toggle" role="group" aria-label="Toggle match schedule layout">
+                    <button type="button" id="grid-view-btn" class="view-btn active">Grid View</button>
+                    <button type="button" id="list-view-btn" class="view-btn">List View</button>
+                </div>
             </div>
 
-            <div class="table-responsive">
-                <table class="schedule-table">
-                    <thead>
-                        <tr>
-                            <th>Match No</th>
-                            <th>Teams</th>
-                            <th>Date &amp; Time</th>
-                            <th>Venue</th>
-                            <th>General (₹)</th>
-                            <th>Premium (₹)</th>
-                            <th>VIP (₹)</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr data-team="MI CSK">
-                            <td>M01</td>
-                            <td>Mumbai Indians vs Chennai Super Kings</td>
-                            <td>26 Mar 2026, 07:30 PM</td>
-                            <td>Wankhede Stadium, Mumbai</td>
-                            <td>800</td>
-                            <td>2,500</td>
-                            <td>6,000</td>
-                            <td><a href="#booking" class="btn-sm">Book</a></td>
-                        </tr>
-                        <tr data-team="RCB KKR">
-                            <td>M02</td>
-                            <td>Royal Challengers Bengaluru vs Kolkata Knight Riders</td>
-                            <td>27 Mar 2026, 07:30 PM</td>
-                            <td>M. Chinnaswamy Stadium, Bengaluru</td>
-                            <td>750</td>
-                            <td>2,200</td>
-                            <td>5,500</td>
-                            <td><a href="#booking" class="btn-sm">Book</a></td>
-                        </tr>
-                        <tr data-team="MI RCB">
-                            <td>M03</td>
-                            <td>Mumbai Indians vs Royal Challengers Bengaluru</td>
-                            <td>30 Mar 2026, 03:30 PM</td>
-                            <td>Wankhede Stadium, Mumbai</td>
-                            <td>900</td>
-                            <td>2,800</td>
-                            <td>6,500</td>
-                            <td><a href="#booking" class="btn-sm">Book</a></td>
-                        </tr>
-                    </tbody>
-                </table>
+            <!-- Match Cards Grid -->
+            <div class="match-grid" id="match-grid">
+                <article class="match-card" data-team="MI CSK">
+                    <div class="match-card-top">
+                        <span class="match-badge">M01</span>
+                        <span class="match-date">26 Mar 2026 • 07:30 PM</span>
+                    </div>
+                    <div class="match-card-body">
+                        <h3>Mumbai Indians vs Chennai Super Kings</h3>
+                        <p class="match-venue">📍 Wankhede Stadium, Mumbai</p>
+                        <div class="match-prices">
+                            <span class="price-pill">General: ₹800</span>
+                            <span class="price-pill">Premium: ₹2,500</span>
+                            <span class="price-pill">VIP: ₹6,000</span>
+                        </div>
+                    </div>
+                    <div class="match-card-footer">
+                        <a
+                            href="#booking"
+                            class="btn-sm book-match-btn"
+                            data-match="M01"
+                            data-match-name="Mumbai Indians vs Chennai Super Kings"
+                        >Book Ticket</a>
+                    </div>
+                </article>
+
+                <article class="match-card" data-team="RCB KKR">
+                    <div class="match-card-top">
+                        <span class="match-badge">M02</span>
+                        <span class="match-date">27 Mar 2026 • 07:30 PM</span>
+                    </div>
+                    <div class="match-card-body">
+                        <h3>Royal Challengers Bengaluru vs Kolkata Knight Riders</h3>
+                        <p class="match-venue">📍 M. Chinnaswamy Stadium, Bengaluru</p>
+                        <div class="match-prices">
+                            <span class="price-pill">General: ₹750</span>
+                            <span class="price-pill">Premium: ₹2,200</span>
+                            <span class="price-pill">VIP: ₹5,500</span>
+                        </div>
+                    </div>
+                    <div class="match-card-footer">
+                        <a
+                            href="#booking"
+                            class="btn-sm book-match-btn"
+                            data-match="M02"
+                            data-match-name="RCB vs Kolkata Knight Riders"
+                        >Book Ticket</a>
+                    </div>
+                </article>
+
+                <article class="match-card" data-team="MI RCB">
+                    <div class="match-card-top">
+                        <span class="match-badge">M03</span>
+                        <span class="match-date">30 Mar 2026 • 03:30 PM</span>
+                    </div>
+                    <div class="match-card-body">
+                        <h3>Mumbai Indians vs Royal Challengers Bengaluru</h3>
+                        <p class="match-venue">📍 Wankhede Stadium, Mumbai</p>
+                        <div class="match-prices">
+                            <span class="price-pill">General: ₹900</span>
+                            <span class="price-pill">Premium: ₹2,800</span>
+                            <span class="price-pill">VIP: ₹6,500</span>
+                        </div>
+                    </div>
+                    <div class="match-card-footer">
+                        <a
+                            href="#booking"
+                            class="btn-sm book-match-btn"
+                            data-match="M03"
+                            data-match-name="Mumbai Indians vs RCB"
+                        >Book Ticket</a>
+                    </div>
+                </article>
+
+                <article class="match-card" data-team="GT DC">
+                    <div class="match-card-top">
+                        <span class="match-badge">M04</span>
+                        <span class="match-date">01 Apr 2026 • 07:30 PM</span>
+                    </div>
+                    <div class="match-card-body">
+                        <h3>Gujarat Titans vs Delhi Capitals</h3>
+                        <p class="match-venue">📍 Narendra Modi Stadium, Ahmedabad</p>
+                        <div class="match-prices">
+                            <span class="price-pill">General: ₹700</span>
+                            <span class="price-pill">Premium: ₹2,000</span>
+                            <span class="price-pill">VIP: ₹5,000</span>
+                        </div>
+                    </div>
+                    <div class="match-card-footer">
+                        <a
+                            href="#booking"
+                            class="btn-sm book-match-btn"
+                            data-match="M04"
+                            data-match-name="Gujarat Titans vs Delhi Capitals"
+                        >Book Ticket</a>
+                    </div>
+                </article>
             </div>
         </section>
 
@@ -134,7 +205,7 @@
         <section id="booking" class="container section">
             <h2>Book Your Match Tickets</h2>
             <p class="section-subtitle">Book directly below or open the <a href="booking.html" class="inline-link">dedicated Ticket Booking Form page</a> for full options.</p>
-            
+
             <div class="booking-wrapper">
                 <!-- Booking Form -->
                 <form id="booking-form" class="booking-form">
@@ -145,6 +216,7 @@
                             <option value="M01">M01: Mumbai Indians vs Chennai Super Kings</option>
                             <option value="M02">M02: RCB vs Kolkata Knight Riders</option>
                             <option value="M03">M03: Mumbai Indians vs RCB</option>
+                            <option value="M04">M04: Gujarat Titans vs Delhi Capitals</option>
                         </select>
                     </div>
 
@@ -220,7 +292,7 @@
             </div>
         </section>
 
-        <!-- Guidelines Section -->
+        <!-- Guidelines Section (3-Column CSS Grid) -->
         <section id="guidelines" class="container section">
             <h2>Stadium Guidelines &amp; Instructions</h2>
             <div class="guidelines-grid">

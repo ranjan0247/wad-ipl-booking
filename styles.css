@@ -2,17 +2,16 @@
    1. CSS Variables (Theme Colors)
    ========================================= */
 :root {
-    --primary-color: #0b1e3b;       /* Dark Navy Blue */
-    --primary-light: #16325c;       /* Lighter Navy */
-    --accent-color: #f5b915;        /* IPL Gold */
-    --accent-hover: #d9a00c;        /* Darker Gold */
-    --bg-color: #f4f6f9;            /* Page Background */
-    --card-bg: #ffffff;             /* Card / Form / Table Background */
-    --text-dark: #1e293b;           /* Main Text */
-    --text-muted: #64748b;          /* Secondary Text */
-    --text-light: #ffffff;          /* Light Text on Dark BG */
+    --primary-color: #0b1e3b;
+    --primary-light: #16325c;
+    --accent-color: #f5b915;
+    --accent-hover: #d9a00c;
+    --bg-color: #f4f6f9;
+    --card-bg: #ffffff;
+    --text-dark: #1e293b;
+    --text-muted: #64748b;
+    --text-light: #ffffff;
     --border-color: #e2e8f0;
-    --danger-color: #dc2626;
     --shadow-sm: 0 2px 8px rgba(11, 30, 59, 0.08);
     --shadow-md: 0 6px 20px rgba(11, 30, 59, 0.14);
     --radius: 10px;
@@ -36,7 +35,7 @@ body {
     background-color: var(--bg-color);
     color: var(--text-dark);
     line-height: 1.6;
-    padding-top: 70px; /* Offset for fixed header */
+    padding-top: 70px;
 }
 
 .container {
@@ -74,7 +73,7 @@ body {
 }
 
 /* =========================================
-   3. Fixed Navigation Bar
+   3. Fixed Navigation Bar (Flexbox + Mobile Hamburger)
    ========================================= */
 header {
     position: fixed;
@@ -125,6 +124,23 @@ header {
 .nav-links a.active {
     color: var(--accent-color);
     background-color: rgba(255, 255, 255, 0.1);
+}
+
+.hamburger {
+    display: none;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: var(--text-light);
+    font-size: 1.5rem;
+    padding: 4px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    line-height: 1.2;
+}
+
+.hamburger:hover {
+    color: var(--accent-color);
+    border-color: var(--accent-color);
 }
 
 /* =========================================
@@ -217,13 +233,13 @@ header {
 
 .btn-sm {
     display: inline-block;
-    padding: 6px 14px;
+    padding: 8px 16px;
     background-color: var(--primary-color);
     color: var(--text-light);
     text-decoration: none;
-    font-size: 0.85rem;
+    font-size: 0.88rem;
     font-weight: 600;
-    border-radius: 5px;
+    border-radius: 6px;
     transition: background-color 0.2s ease, color 0.2s ease;
 }
 
@@ -233,17 +249,17 @@ header {
 }
 
 /* =========================================
-   6. About & Guidelines Cards
+   6. About & 3-Column Guidelines Grid (Activity 8)
    ========================================= */
 .about-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 24px;
 }
 
 .guidelines-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 24px;
 }
 
@@ -279,13 +295,26 @@ header {
 }
 
 /* =========================================
-   7. Filter & Tables
+   7. Match Schedule Controls & CSS Grid Cards (Activity 8)
    ========================================= */
+.schedule-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding: 16px 20px;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+}
+
 .filter-container {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 20px;
 }
 
 .filter-container label {
@@ -302,6 +331,143 @@ header {
     font-size: 0.95rem;
 }
 
+.view-toggle {
+    display: flex;
+    gap: 8px;
+}
+
+.view-btn {
+    padding: 8px 16px;
+    border: 1px solid var(--primary-color);
+    background-color: transparent;
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 0.9rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.view-btn.active,
+.view-btn:hover {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+}
+
+/* Default Grid View */
+.match-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+.match-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-top: 4px solid var(--primary-color);
+    border-radius: var(--radius);
+    padding: 22px;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 16px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.match-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.match-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.match-badge {
+    background-color: var(--accent-color);
+    color: var(--primary-color);
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 4px 10px;
+    border-radius: 999px;
+}
+
+.match-date {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.match-card-body h3 {
+    color: var(--primary-color);
+    font-size: 1.15rem;
+    margin-bottom: 6px;
+}
+
+.match-venue {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+}
+
+.match-prices {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.price-pill {
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 6px;
+    background-color: #f1f5f9;
+    color: var(--primary-color);
+    border: 1px solid var(--border-color);
+}
+
+.match-card-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-color);
+}
+
+/* List View Toggle State */
+.match-grid.list-view {
+    grid-template-columns: 1fr;
+}
+
+.match-grid.list-view .match-card {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--border-color);
+    border-left: 5px solid var(--accent-color);
+}
+
+.match-grid.list-view .match-card-top {
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 165px;
+}
+
+.match-grid.list-view .match-card-body {
+    flex: 1;
+}
+
+.match-grid.list-view .match-card-footer {
+    border-top: none;
+    padding-top: 0;
+}
+
+/* =========================================
+   8. Tables (My Ticket Bookings)
+   ========================================= */
 .table-responsive {
     overflow-x: auto;
     background-color: var(--card-bg);
@@ -336,7 +502,7 @@ header {
 }
 
 /* =========================================
-   8. Booking Form & Summary Card
+   9. Booking Form & Summary Card
    ========================================= */
 .booking-wrapper {
     display: grid;
@@ -409,7 +575,6 @@ header {
     margin-top: 4px;
 }
 
-/* Radio & Checkbox Groups (Activity 3) */
 .option-group {
     display: flex;
     flex-direction: column;
@@ -472,7 +637,7 @@ header {
 }
 
 /* =========================================
-   9. Footer
+   10. Footer
    ========================================= */
 footer {
     background-color: var(--primary-color);
@@ -489,32 +654,7 @@ footer p {
 }
 
 /* =========================================
-   10. Responsive Adjustments
-   ========================================= */
-@media (max-width: 768px) {
-    .navbar {
-        padding: 0 16px;
-    }
-
-    .nav-links {
-        gap: 10px;
-        font-size: 0.88rem;
-    }
-
-    .hero h1 {
-        font-size: 2rem;
-    }
-
-    .booking-wrapper {
-        grid-template-columns: 1fr;
-    }
-
-    .form-actions {
-        flex-direction: column;
-    }
-}
-/* =========================================
-   11. Toast Notifications & Status Badge (Activity 5)
+   11. Toast Notifications & Status Badge
    ========================================= */
 .toast-container {
     position: fixed;
@@ -565,4 +705,109 @@ footer p {
     color: #166534;
     font-size: 0.82rem;
     font-weight: 600;
+}
+
+/* =========================================
+   12. Responsive Media Queries (Tablets & Phones - Activity 8)
+   ========================================= */
+@media (max-width: 900px) {
+    .guidelines-grid,
+    .match-grid,
+    .about-grid,
+    .booking-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .match-grid.list-view .match-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .match-grid.list-view .match-card-top {
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .match-grid.list-view .match-card-footer {
+        width: 100%;
+        border-top: 1px solid var(--border-color);
+        padding-top: 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 0 18px;
+    }
+
+    .hamburger {
+        display: block;
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background-color: var(--primary-color);
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 12px 20px 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow: var(--shadow-md);
+        display: none;
+    }
+
+    .nav-links.open {
+        display: flex;
+    }
+
+    .nav-links li {
+        width: 100%;
+    }
+
+    .nav-links a {
+        display: block;
+        padding: 12px 10px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .hero {
+        padding: 70px 18px;
+    }
+
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .schedule-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .view-toggle .view-btn {
+        flex: 1;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .toast-container {
+        left: 16px;
+        right: 16px;
+        bottom: 16px;
+    }
+
+    .toast {
+        min-width: auto;
+        max-width: 100%;
+    }
 }
